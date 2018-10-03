@@ -1,5 +1,6 @@
 import sys
 import math
+import decimal
 
 class Example:
     def __init__(self, vb, sentence):
@@ -34,7 +35,7 @@ class Example:
                     max_arg = w
             self.bp[0][v] = max_arg
             self.prob[0][v] = max_prob
-            viterbi_net_str += "P(%s=%s) = %f\n" % (self.sentence[0], v, max_prob)
+            viterbi_net_str += "P(%s=%s) = %s\n" % (self.sentence[0], v, '{0:0.10f}'.format(math.e**max_prob))
             
         for k in range(1, len(self.sentence)):
             for v in self.tags:
@@ -47,7 +48,7 @@ class Example:
                         max_arg = w
                 self.prob[k][v] = max_prob
                 self.bp[k][v] = max_arg
-                viterbi_net_str += "P(%s=%s) = %f\n" % (self.sentence[k], v, max_prob)
+                viterbi_net_str += "P(%s=%s) = %s\n" % (self.sentence[k], v, '{0:0.10f}'.format(math.e**max_prob))
                 backptr_net_str += "Backptr(%s=%s) = %s\n" %(self.sentence[k], v, max_arg)
 
         last_probs = self.prob[len(self.sentence) - 1]
@@ -64,7 +65,7 @@ class Example:
         
         print(viterbi_net_str)
         print(backptr_net_str)
-        print ("BEST TAG SEQUENCE HAS PROBABILITY = %f" % (max_prob))
+        print "BEST TAG SEQUENCE HAS PROBABILITY = %s" % '{0:0.10f}'.format(math.e**max_prob)
         self.print_final_pos()
         print
 
