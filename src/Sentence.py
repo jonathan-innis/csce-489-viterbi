@@ -21,17 +21,12 @@ class Sentence:
             print("%s -> %s" % (self.sentence[i], self.pos[i]))
     
     def get_probability(self, k, v, w):
-        return self.prob[k-1][w] + math.log(self.vb.get_transition(v, w)) + math.log(self.vb.get_emission(self.sentence[k], v))
+        return self.prob[k-1][w] + math.log(self.vb.get_transition(v,w)) + math.log(self.vb.get_emission(self.sentence[k], v))
     
     def tag_sentence_start(self):
         for v in self.tags:
             max_prob = 1 + math.log(self.vb.get_transition(v, 'phi')) + math.log(self.vb.get_emission(self.sentence[0], v))
             max_arg = v
-            for w in self.tags:
-                pi = 1 + math.log(self.vb.get_transition(w, 'phi')) + math.log(self.vb.get_emission(self.sentence[0], v))
-                if pi > max_prob:
-                    max_prob = pi
-                    max_arg = w
             self.bp[0][v] = max_arg
             self.prob[0][v] = max_prob
             self.viterbi_net_str += "P(%s=%s) = %s\n" % (self.sentence[0], v, '{0:0.10f}'.format(math.e**max_prob))
@@ -41,11 +36,11 @@ class Sentence:
         max_prob = last_probs[self.tags[0]]
         max_tag = self.tags[0]
         for v in self.tags:
-            if last_probs[v] + math.log(self.vb.get_transition('fin', v)) > max_prob:
-                max_prob = last_probs[v] + math.log(self.vb.get_transition('fin', v))
+            if last_probs[v] > max_prob:
+                max_prob = last_probs[v]
                 max_tag = v      
         self.pos[len(self.sentence) - 1] = max_tag
-        print "BEST TAG SEQUENCE HAS PROBABILITY = %s" % '{0:0.10f}'.format(math.e**max_prob)
+        print ("BEST TAG SEQUENCE HAS PROBABILITY = %s" % ('{0:0.10f}'.format(math.e**max_prob)))
 
     def tag(self):
         #Doing initial tagging with the startng tags
