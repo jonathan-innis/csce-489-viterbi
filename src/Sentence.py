@@ -2,13 +2,13 @@ import math
 
 class Sentence:
     def __init__(self, vb, sentence):
-        self.tags = ["noun", "verb", "inf", "prep"]
+        self.PARTS_OF_SPEECH = ["noun", "verb", "inf", "prep"]
         self.vb = vb
         self.viterbi_net_str = ""
         self.backptr_net_str = ""
         self.sentence = sentence
-        self.prob = [{tag:(1 if i == 0 else 0) for tag in self.tags} for i in range(len(sentence))]
-        self.bp = [{tag:(1 if i == 0 else 0) for tag in self.tags} for i in range(len(sentence))]
+        self.prob = [{tag:(1 if i == 0 else 0) for tag in self.PARTS_OF_SPEECH} for i in range(len(sentence))]
+        self.bp = [{tag:(1 if i == 0 else 0) for tag in self.PARTS_OF_SPEECH} for i in range(len(sentence))]
         self.pos = ["" for x in range(len(self.sentence))]
         self.tag()
 
@@ -24,7 +24,7 @@ class Sentence:
         return self.prob[k-1][w] + math.log(self.vb.get_transition(v,w)) + math.log(self.vb.get_emission(self.sentence[k], v))
     
     def tag_sentence_start(self):
-        for v in self.tags:
+        for v in self.PARTS_OF_SPEECH:
             max_prob = 1 + math.log(self.vb.get_transition(v, 'phi')) + math.log(self.vb.get_emission(self.sentence[0], v))
             max_arg = v
             self.bp[0][v] = max_arg
@@ -33,9 +33,9 @@ class Sentence:
     
     def tag_sentence_end(self):
         last_probs = self.prob[len(self.sentence) - 1]
-        max_prob = last_probs[self.tags[0]]
-        max_tag = self.tags[0]
-        for v in self.tags:
+        max_prob = last_probs[self.PARTS_OF_SPEECH[0]]
+        max_tag = self.PARTS_OF_SPEECH[0]
+        for v in self.PARTS_OF_SPEECH:
             if last_probs[v] > max_prob:
                 max_prob = last_probs[v]
                 max_tag = v      
@@ -50,10 +50,10 @@ class Sentence:
         self.tag_sentence_start()
             
         for k in range(1, len(self.sentence)):
-            for v in self.tags:
+            for v in self.PARTS_OF_SPEECH:
                 max_prob = self.get_probability(k,v,v)
                 max_arg = v
-                for w in self.tags:
+                for w in self.PARTS_OF_SPEECH:
                     pi = self.get_probability(k,v,w)
                     if pi > max_prob:
                         max_prob = pi

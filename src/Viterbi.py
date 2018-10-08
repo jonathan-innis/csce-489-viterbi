@@ -3,7 +3,7 @@ import Sentence
 
 class Viberbi:
     def __init__(self, prob_file, sents_file):
-        self.tags = ["noun", "verb", "inf", "prep", "phi", "fin"]
+        self.PARTS_OF_SPEECH = ["noun", "verb", "inf", "prep", "phi", "fin"]
         self.emissions = {}
         self.transitions = {}
         self.sentences = []
@@ -38,7 +38,7 @@ class Viberbi:
     def parse_prob_line(self, line):
         parsed_line = line.strip().split(" ")
         if len(parsed_line) == 3:
-            if parsed_line[0] in self.tags and parsed_line[1] in self.tags:
+            if parsed_line[0] in self.PARTS_OF_SPEECH and parsed_line[1] in self.PARTS_OF_SPEECH:
                 self.transitions[(parsed_line[0], parsed_line[1])] = float(parsed_line[2])
             else:
                 self.emissions[(parsed_line[0], parsed_line[1])] = float(parsed_line[2])
