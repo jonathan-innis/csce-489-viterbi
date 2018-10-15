@@ -40,6 +40,7 @@ BEST TAG SEQUENCE HAS PROBABILITY = 0.0002350944
 fish -> noun
 has -> verb
 mark -> noun
+
 PROCESSING SENTENCE: mark bears fish
 
 FINAL VITERBI NETWORK
@@ -72,6 +73,7 @@ BEST TAG SEQUENCE HAS PROBABILITY = 0.0001567296
 fish -> noun
 bears -> verb
 mark -> noun
+
 PROCESSING SENTENCE: mark likes to fish for fish
 
 FINAL VITERBI NETWORK
