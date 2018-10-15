@@ -56,6 +56,7 @@ class Viberbi:
         for sentence in self.sentences:
             print("PROCESSING SENTENCE: %s\n" % (' '.join(sentence)))
             Sentence.Sentence(self, sentence)
+            print()
     
 def main():
     try:
