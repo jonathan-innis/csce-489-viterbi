@@ -36,7 +36,7 @@ class Viberbi:
             self.parse_prob_line(line)
 
     def parse_prob_line(self, line):
-        parsed_line = line.strip().split(" ")
+        parsed_line = [x.lower() for x in line.strip().split(" ")]
         if len(parsed_line) == 3:
             if parsed_line[0] in self.PARTS_OF_SPEECH and parsed_line[1] in self.PARTS_OF_SPEECH:
                 self.transitions[(parsed_line[0], parsed_line[1])] = float(parsed_line[2])
@@ -49,7 +49,7 @@ class Viberbi:
             self.parse_sents_line(line)
     
     def parse_sents_line(self, line):
-        parsed_line = line.strip().split(" ")
+        parsed_line = [x.lower() for x in line.strip().split(" ")]
         self.sentences.append(parsed_line)
 
     def train(self):
@@ -59,13 +59,11 @@ class Viberbi:
     
 def main():
     try:
-        if (len(sys.argv) != 3):
-            raise ReferenceError("You did not include the correct number of files as arguments")
-        else:
-            prob_file = sys.argv[1]
-            sentence_file = sys.argv[2]
-            vb = Viberbi(prob_file, sentence_file)
-            vb.train()
+        assert len(sys.argv) == 3
+        prob_file = sys.argv[1]
+        sentence_file = sys.argv[2]
+        vb = Viberbi(prob_file, sentence_file)
+        vb.train()
 
     except ReferenceError as e:
         print(e)

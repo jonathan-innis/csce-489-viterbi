@@ -12,12 +12,13 @@ class Sentence:
         self.pos = ["" for x in range(len(self.sentence))]
         self.tag()
 
+    #Printing all of the tags backwards
     def get_final_tags(self):
         for k in range(len(self.sentence) - 2, -1, -1):
             self.pos[k] = self.bp[k+1][self.pos[k+1]]
 
     def print_final_tags(self):
-        for i in range(len(self.sentence)):
+        for i in range(len(self.sentence) - 1, -1, -1):
             print("%s -> %s" % (self.sentence[i], self.pos[i]))
     
     def get_probability(self, k, v, w):
