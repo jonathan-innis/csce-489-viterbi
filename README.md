@@ -134,3 +134,8 @@ to -> inf
 likes -> verb
 mark -> noun
 ```
+
+The Viterbi algorithm does an extremely good job at classifying POS tags. There are some instances where the algorithm could interpret the POS tag as another POS tag as any human would, but overall the algorithm does an extremely good job of classifying POS tags as a human would.
+
+## Known Bugs, Problems, or Limitations
+There are no known bugs, problems or limitations with the program that I have written.
